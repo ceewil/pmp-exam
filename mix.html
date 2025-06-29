@@ -1,12 +1,13 @@
+<!-- PMP Full Set Quizzes with Final Score - Mixed Questions -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PMP Mix Questions Quiz</title>
+    <title>PMP Mixed Questions Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             border: 2px solid #333;
@@ -32,57 +33,105 @@
     </style>
 </head>
 <body>
-    <h1>PMP Quiz - Mix Questions</h1>
-    
+    <h1>PMP Mixed Questions Quiz</h1>
     <div id="quiz-container">
-        <!-- Question 1 -->
-        <div class="question" id="q1">
-            <p><strong>1. The risk response strategy that involves reallocating ownership of a positive risk to a third party is:</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q1', this, 'correct')">A. Share</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">B. Mitigate</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">C. Avoid</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">D. Transfer</button>
-            </div>
-            <div class="feedback" id="feedback-q1"></div>
-            <button class="next-btn" onclick="nextQuestion('q1', 'q2')">Next</button>
-        </div>
+        <div class="question" id="question-box"></div>
+        <div class="answers" id="answer-buttons"></div>
+        <div class="feedback" id="feedback"></div>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
 
-        <!-- Question 2 -->
-        <div class="question" id="q2" style="display:none">
-            <p><strong>2. Which document formally authorizes a project and provides the project manager with authority to apply resources to project activities?</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q2', this, 'incorrect')">A. Business case</button>
-                <button onclick="checkAnswer('q2', this, 'correct')">B. Project charter</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">C. Scope statement</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">D. Project management plan</button>
-            </div>
-            <div class="feedback" id="feedback-q2"></div>
-            <button class="next-btn" onclick="alert('End of quiz!')">Finish</button>
-        </div>
+    <div id="results-container" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="score-text"></p>
+        <button onclick="startQuiz()">Retake Quiz</button>
     </div>
 
 <script>
-function checkAnswer(qid, button, result) {
-    const feedback = document.getElementById('feedback-' + qid);
-    const buttons = document.querySelectorAll('#' + qid + ' .answers button');
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (result === 'correct') {
-        feedback.textContent = '✅ Correct!';
-        feedback.style.color = 'green';
-    } else {
-        feedback.textContent = '❌ Incorrect.';
-        feedback.style.color = 'red';
+const questions = [
+    {
+        question: "Which document provides authority to apply resources to project activities?",
+        answers: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"],
+        correct: 1
+    },
+    {
+        question: "What is a key output of the Close Project or Phase process?",
+        answers: ["Work performance reports", "Final product, service, or result transition", "Resource assignments", "Project management plan"],
+        correct: 1
+    },
+    {
+        question: "Which Process Group focuses on tracking, reviewing, and regulating project performance?",
+        answers: ["Initiating", "Planning", "Executing", "Monitoring & Controlling"],
+        correct: 3
+    },
+    {
+        question: "The risk response strategy to allocate ownership of a positive risk to a third party is:",
+        answers: ["Share", "Mitigate", "Avoid", "Transfer"],
+        correct: 0
     }
-    document.querySelector('#' + qid + ' .next-btn').style.display = 'block';
+    // Full Mixed Questions set would go here...
+];
+
+let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById("quiz-container").style.display = "block";
+    document.getElementById("results-container").style.display = "none";
+    showQuestion();
 }
 
-function nextQuestion(currentId, nextId) {
-    document.getElementById(currentId).style.display = 'none';
-    document.getElementById(nextId).style.display = 'block';
+function showQuestion() {
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("next-btn").style.display = "none";
+    const q = shuffledQuestions[currentQuestionIndex];
+    document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+    const answerButtons = document.getElementById("answer-buttons");
+    answerButtons.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answerButtons.appendChild(btn);
+    });
 }
+
+function checkAnswer(selected) {
+    const q = shuffledQuestions[currentQuestionIndex];
+    const feedback = document.getElementById("feedback");
+    const buttons = document.querySelectorAll("#answer-buttons button");
+    buttons.forEach(b => b.disabled = true);
+    if (selected === q.correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        score++;
+    } else {
+        feedback.textContent = "❌ Incorrect.";
+        feedback.style.color = "red";
+    }
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < shuffledQuestions.length) {
+        showQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("results-container").style.display = "block";
+    document.getElementById("score-text").textContent = `You scored ${score} out of ${shuffledQuestions.length}.`;
+}
+
+startQuiz();
 </script>
-
 </body>
 </html>
