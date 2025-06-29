@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PMP Closing Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .answers button {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>PMP Quiz - Closing</h1>
+    
+    <div id="quiz-container">
+        <!-- Question 1 -->
+        <div class="question" id="q1">
+            <p><strong>1. In which Project Management Process Group is the project officially completed and administrative activities finalized?</strong></p>
+            <div class="answers">
+                <button onclick="checkAnswer('q1', this, 'incorrect')">A. Initiating</button>
+                <button onclick="checkAnswer('q1', this, 'incorrect')">B. Planning</button>
+                <button onclick="checkAnswer('q1', this, 'incorrect')">C. Executing</button>
+                <button onclick="checkAnswer('q1', this, 'correct')">D. Closing</button>
+            </div>
+            <div class="feedback" id="feedback-q1"></div>
+            <button class="next-btn" onclick="nextQuestion('q1', 'q2')">Next</button>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question" id="q2" style="display:none">
+            <p><strong>2. What is a key output of the Close Project or Phase process?</strong></p>
+            <div class="answers">
+                <button onclick="checkAnswer('q2', this, 'incorrect')">A. Work performance reports</button>
+                <button onclick="checkAnswer('q2', this, 'correct')">B. Final product, service, or result transition</button>
+                <button onclick="checkAnswer('q2', this, 'incorrect')">C. Resource assignments</button>
+                <button onclick="checkAnswer('q2', this, 'incorrect')">D. Project management plan</button>
+            </div>
+            <div class="feedback" id="feedback-q2"></div>
+            <button class="next-btn" onclick="alert('End of quiz!')">Finish</button>
+        </div>
+    </div>
+
+<script>
+function checkAnswer(qid, button, result) {
+    const feedback = document.getElementById('feedback-' + qid);
+    const buttons = document.querySelectorAll('#' + qid + ' .answers button');
+    buttons.forEach(btn => btn.disabled = true);
+    
+    if (result === 'correct') {
+        feedback.textContent = '✅ Correct!';
+        feedback.style.color = 'green';
+    } else {
+        feedback.textContent = '❌ Incorrect.';
+        feedback.style.color = 'red';
+    }
+    document.querySelector('#' + qid + ' .next-btn').style.display = 'block';
+}
+
+function nextQuestion(currentId, nextId) {
+    document.getElementById(currentId).style.display = 'none';
+    document.getElementById(nextId).style.display = 'block';
+}
+</script>
+
+</body>
+</html>
