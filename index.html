@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PMP Practice Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .answers button {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>PMP Practice Quiz</h1>
+    <div class="question">
+        <p><strong>Which document describes the necessary information to determine if a project is worth the required investment?</strong></p>
+        <div class="answers">
+            <button onclick="checkAnswer(this, 'incorrect')">A. Cost baseline</button>
+            <button onclick="checkAnswer(this, 'incorrect')">B. Service level agreement</button>
+            <button onclick="checkAnswer(this, 'incorrect')">C. Memorandum of understanding</button>
+            <button onclick="checkAnswer(this, 'correct')">D. Business case</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        function checkAnswer(button, result) {
+            const feedback = document.getElementById('feedback');
+            if (result === 'correct') {
+                feedback.textContent = '✅ Correct! The Business Case determines project viability.';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = '❌ Incorrect. The correct answer is D. Business Case.';
+                feedback.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
+
