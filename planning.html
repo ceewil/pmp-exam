@@ -1,8 +1,9 @@
+<!-- PMP Full Set Quizzes with Final Score - Planning Quiz -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Planning Quiz - PMP Practice</title>
+    <title>PMP Planning Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,43 +26,102 @@
             margin-top: 15px;
             font-weight: bold;
         }
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h1>Planning Quiz - PMP Practice</h1>
+    <h1>PMP Planning Quiz</h1>
     <div id="quiz-container">
-
-        <div class="question">
-            <p><strong>1. Which document describes the necessary information to determine if a project is worth the required investment?</strong></p>
-            <button onclick="showFeedback(this, false)">A. Cost baseline</button>
-            <button onclick="showFeedback(this, false)">B. Service level agreement</button>
-            <button onclick="showFeedback(this, false)">C. Memorandum of understanding</button>
-            <button onclick="showFeedback(this, true)">D. Business case</button>
-        </div>
-
+        <div class="question" id="question-box"></div>
+        <div class="answers" id="answer-buttons"></div>
         <div class="feedback" id="feedback"></div>
-
-        <button style="margin-top: 30px;" onclick="finishQuiz()">Finish</button>
-
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
     </div>
 
-    <script>
-    function showFeedback(button, isCorrect) {
-        const feedback = document.getElementById("feedback");
-        if (isCorrect) {
-            feedback.textContent = "✅ Correct!";
-            feedback.style.color = "green";
-        } else {
-            feedback.textContent = "❌ Incorrect.";
-            feedback.style.color = "red";
-        }
-        const buttons = document.querySelectorAll("button");
-        buttons.forEach(b => b.disabled = true);
-    }
+    <div id="results-container" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="score-text"></p>
+        <button onclick="startQuiz()">Retake Quiz</button>
+    </div>
 
-    function finishQuiz() {
-        window.location.href = 'thankyou.html';
+<script>
+const questions = [
+    {
+        question: "Which of the following is a key output of the Develop Project Management Plan process?",
+        answers: ["Project charter", "Work breakdown structure", "Project management plan", "Scope statement"],
+        correct: 2
+    },
+    {
+        question: "In which process is the project scope statement created?",
+        answers: ["Plan Scope Management", "Define Scope", "Create WBS", "Collect Requirements"],
+        correct: 1
     }
-    </script>
+    // Full set of Planning questions would go here...
+];
+
+let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById("quiz-container").style.display = "block";
+    document.getElementById("results-container").style.display = "none";
+    showQuestion();
+}
+
+function showQuestion() {
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("next-btn").style.display = "none";
+    const q = shuffledQuestions[currentQuestionIndex];
+    document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+    const answerButtons = document.getElementById("answer-buttons");
+    answerButtons.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answerButtons.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected) {
+    const q = shuffledQuestions[currentQuestionIndex];
+    const feedback = document.getElementById("feedback");
+    const buttons = document.querySelectorAll("#answer-buttons button");
+    buttons.forEach(b => b.disabled = true);
+    if (selected === q.correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        score++;
+    } else {
+        feedback.textContent = "❌ Incorrect.";
+        feedback.style.color = "red";
+    }
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < shuffledQuestions.length) {
+        showQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("results-container").style.display = "block";
+    document.getElementById("score-text").textContent = `You scored ${score} out of ${shuffledQuestions.length}.`;
+}
+
+startQuiz();
+</script>
 </body>
 </html>
