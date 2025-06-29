@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PMP Closing Quiz</title>
+    <title>PMP Closing Quiz - Full Version</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             border: 2px solid #333;
@@ -32,57 +32,90 @@
     </style>
 </head>
 <body>
-    <h1>PMP Quiz - Closing</h1>
-    
+    <h1>PMP Closing Quiz - Full Version</h1>
     <div id="quiz-container">
-        <!-- Question 1 -->
-        <div class="question" id="q1">
-            <p><strong>1. In which Project Management Process Group is the project officially completed and administrative activities finalized?</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q1', this, 'incorrect')">A. Initiating</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">B. Planning</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">C. Executing</button>
-                <button onclick="checkAnswer('q1', this, 'correct')">D. Closing</button>
-            </div>
-            <div class="feedback" id="feedback-q1"></div>
-            <button class="next-btn" onclick="nextQuestion('q1', 'q2')">Next</button>
-        </div>
-
-        <!-- Question 2 -->
-        <div class="question" id="q2" style="display:none">
-            <p><strong>2. What is a key output of the Close Project or Phase process?</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q2', this, 'incorrect')">A. Work performance reports</button>
-                <button onclick="checkAnswer('q2', this, 'correct')">B. Final product, service, or result transition</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">C. Resource assignments</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">D. Project management plan</button>
-            </div>
-            <div class="feedback" id="feedback-q2"></div>
-            <button class="next-btn" onclick="alert('End of quiz!')">Finish</button>
-        </div>
+        <div class="question" id="question-box"></div>
+        <div class="answers" id="answer-buttons"></div>
+        <div class="feedback" id="feedback"></div>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
     </div>
-
+    <div id="score-box" style="display:none; font-weight:bold; font-size:1.2em; margin-top:20px;"></div>
 <script>
-function checkAnswer(qid, button, result) {
-    const feedback = document.getElementById('feedback-' + qid);
-    const buttons = document.querySelectorAll('#' + qid + ' .answers button');
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (result === 'correct') {
-        feedback.textContent = '✅ Correct!';
-        feedback.style.color = 'green';
-    } else {
-        feedback.textContent = '❌ Incorrect.';
-        feedback.style.color = 'red';
+const questions = [
+    {
+        question: "Which of the following is a key output of the Close Project or Phase process?",
+        answers: ["Project Charter", "Final product, service, or result transition", "Lessons Learned Register", "Work Breakdown Structure"],
+        correct: 1
+    },
+    {
+        question: "During project closure, which document formally indicates the project is complete?",
+        answers: ["Project Scope Statement", "Project Charter", "Final Acceptance Document", "Project Management Plan"],
+        correct: 2
+    },
+    {
+        question: "Which process ensures that project deliverables meet requirements and are formally accepted?",
+        answers: ["Validate Scope", "Control Quality", "Perform Integrated Change Control", "Close Project or Phase"],
+        correct: 0
     }
-    document.querySelector('#' + qid + ' .next-btn').style.display = 'block';
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    showQuestion();
 }
 
-function nextQuestion(currentId, nextId) {
-    document.getElementById(currentId).style.display = 'none';
-    document.getElementById(nextId).style.display = 'block';
+function showQuestion() {
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("next-btn").style.display = "none";
+    const q = questions[currentQuestionIndex];
+    document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+    const answerButtons = document.getElementById("answer-buttons");
+    answerButtons.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answerButtons.appendChild(btn);
+    });
 }
+
+function checkAnswer(selected) {
+    const q = questions[currentQuestionIndex];
+    const feedback = document.getElementById("feedback");
+    const buttons = document.querySelectorAll("#answer-buttons button");
+    buttons.forEach(b => b.disabled = true);
+    if (selected === q.correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        score++;
+    } else {
+        feedback.textContent = "❌ Incorrect.";
+        feedback.style.color = "red";
+    }
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        showScore();
+    }
+}
+
+function showScore() {
+    document.getElementById("quiz-container").style.display = "none";
+    const scoreBox = document.getElementById("score-box");
+    scoreBox.style.display = "block";
+    scoreBox.textContent = `You scored ${score} out of ${questions.length}.`;
+}
+
+startQuiz();
 </script>
-
 </body>
 </html>
