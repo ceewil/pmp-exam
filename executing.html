@@ -1,9 +1,8 @@
-<!-- PMP Full Set Quizzes with Final Score - Executing Quiz -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PMP Executing Quiz</title>
+    <title>PMP Executing Quiz - Full Version</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,34 +32,83 @@
     </style>
 </head>
 <body>
-    <h1>PMP Executing Quiz</h1>
+    <h1>PMP Executing Quiz - Full Version</h1>
     <div id="quiz-container">
         <div class="question" id="question-box"></div>
         <div class="answers" id="answer-buttons"></div>
         <div class="feedback" id="feedback"></div>
         <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
     </div>
-
-    <div id="results-container" style="display:none;">
-        <h2>Quiz Complete!</h2>
-        <p id="score-text"></p>
-        <button onclick="startQuiz()">Retake Quiz</button>
-    </div>
-
+    <div id="score-box" style="display:none; font-weight:bold; font-size:1.2em; margin-top:20px;"></div>
 <script>
 const questions = [
     {
-        question: "Which of the following is an output of the Direct and Manage Project Work process?",
-        answers: ["Work performance data", "Project charter", "Project scope statement", "Risk register"],
-        correct: 0
+        question: "What is the primary output of the Direct and Manage Project Work process?",
+        answers: ["Change requests", "Deliverables", "Work performance data", "Project charter"],
+        correct: 1
     },
     {
-        question: "Which tool is commonly used to acquire resources during the Executing phase?",
-        answers: ["Make-or-buy analysis", "Negotiation", "Control charts", "Monte Carlo simulation"],
+        question: "Who is responsible for managing project execution?",
+        answers: ["Project sponsor", "Project team", "Project manager", "Functional manager"],
+        correct: 2
+    },
+    {
+        question: "What technique is often used to obtain team consensus during execution?",
+        answers: ["SWOT analysis", "Facilitation", "Brainstorming", "Variance analysis"],
         correct: 1
     }
-    // Full set of Executing questions would go here...
 ];
 
-let shuffledQuestions = [];
-let currentQuestionI
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("next-btn").style.display = "none";
+    const q = questions[currentQuestionIndex];
+    document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+    const answerButtons = document.getElementById("answer-buttons");
+    answerButtons.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answerButtons.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected) {
+    const q = questions[currentQuestionIndex];
+    const feedback = document.getElementById("feedback");
+    const buttons = document.querySelectorAll("#answer-buttons button");
+    buttons.forEach(b => b.disabled = true);
+    if (selected === q.correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        score++;
+    } else {
+        feedback.textContent = "❌ Incorrect.";
+        feedback.style.color = "red";
+    }
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        showScore();
+    }
+}
+
+function showScore() {
+    document.getElementById("quiz-container").style.display = "none";
+    const scoreBox = document.getElementById("score-box");
+    scoreBox.s
