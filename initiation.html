@@ -1,9 +1,8 @@
-<!-- PMP Full Set Quizzes with Final Score - Template Example for Initiation Quiz -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PMP Initiation Quiz</title>
+    <title>PMP Initiation Quiz - Full</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,52 +32,41 @@
     </style>
 </head>
 <body>
-    <h1>PMP Initiation Quiz</h1>
-    <div id="quiz-container">
-        <div class="question" id="question-box"></div>
-        <div class="answers" id="answer-buttons"></div>
-        <div class="feedback" id="feedback"></div>
-        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
-    </div>
-
-    <div id="results-container" style="display:none;">
-        <h2>Quiz Complete!</h2>
-        <p id="score-text"></p>
-        <button onclick="startQuiz()">Retake Quiz</button>
-    </div>
-
+<h1>PMP Initiation Quiz - Full</h1>
+<div id="quiz-container">
+    <div class="question" id="question-box"></div>
+    <div class="answers" id="answer-buttons"></div>
+    <div class="feedback" id="feedback"></div>
+    <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+</div>
+<div id="score-container" style="display:none; margin-top: 20px; font-weight: bold;"></div>
 <script>
 const questions = [
-    {
-        question: "In which Process Group is the project officially completed?",
-        answers: ["Initiating", "Planning", "Executing", "Closing"],
-        correct: 3
-    },
-    {
-        question: "Which document provides authority to apply resources to project activities?",
-        answers: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"],
-        correct: 1
-    }
-    // Full set of Initiation questions would go here...
+    { question: "An element of the project scope statement is:", answers: ["Acceptance criteria", "A stakeholder list", "A summary budget", "High-level risks"], correct: 0 },
+    { question: "Which document describes the necessary information to determine if a project is worth the required investment?", answers: ["Cost baseline", "Service level agreement", "Memorandum of understanding", "Business case"], correct: 3 },
+    { question: "Which input to the Plan Risk Management process provides information on high-level risks?", answers: ["Project charter", "Enterprise environmental factors", "Stakeholder register", "Organizational process assets"], correct: 0 },
+    { question: "Which item is an example of personnel assessment?", answers: ["Resource calendar", "Tight matrix", "Team-building activity", "Focus group"], correct: 3 },
+    { question: "Which input to the Manage Stakeholder Engagement process provides guidance on how stakeholders can best be involved?", answers: ["Feedback analysis", "Stakeholder analysis", "Communication management plan", "Stakeholder management plan"], correct: 3 },
+    { question: "Which input to the Identify Stakeholders process provides information about internal or external parties related to the project?", answers: ["Procurement documents", "Communications plan", "Project charter", "Stakeholder register"], correct: 2 },
+    { question: "The Identify Stakeholders process is found in which Process Group?", answers: ["Initiating", "Monitoring and Controlling", "Planning", "Executing"], correct: 0 },
+    { question: "An input to Develop Project Charter is a/an:", answers: ["Business case", "Activity list", "Project management plan", "Cost forecast"], correct: 0 },
+    { question: "Which Knowledge Area involves identifying the people, groups, or organizations that may be impacted by or impact a project?", answers: ["Project Risk Management", "Project Human Resource Management", "Project Scope Management", "Project Stakeholder Management"], correct: 3 },
+    { question: "Which input to Collect Requirements is used to identify stakeholders who can provide information on requirements?", answers: ["Stakeholder register", "Scope management plan", "Stakeholder management plan", "Project charter"], correct: 0 }
 ];
 
-let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 
 function startQuiz() {
-    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
     score = 0;
-    document.getElementById("quiz-container").style.display = "block";
-    document.getElementById("results-container").style.display = "none";
     showQuestion();
 }
 
 function showQuestion() {
     document.getElementById("feedback").textContent = "";
     document.getElementById("next-btn").style.display = "none";
-    const q = shuffledQuestions[currentQuestionIndex];
+    const q = questions[currentQuestionIndex];
     document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
     const answerButtons = document.getElementById("answer-buttons");
     answerButtons.innerHTML = "";
@@ -91,7 +79,7 @@ function showQuestion() {
 }
 
 function checkAnswer(selected) {
-    const q = shuffledQuestions[currentQuestionIndex];
+    const q = questions[currentQuestionIndex];
     const feedback = document.getElementById("feedback");
     const buttons = document.querySelectorAll("#answer-buttons button");
     buttons.forEach(b => b.disabled = true);
@@ -108,17 +96,18 @@ function checkAnswer(selected) {
 
 function nextQuestion() {
     currentQuestionIndex++;
-    if (currentQuestionIndex < shuffledQuestions.length) {
+    if (currentQuestionIndex < questions.length) {
         showQuestion();
     } else {
-        showResults();
+        showScore();
     }
 }
 
-function showResults() {
+function showScore() {
     document.getElementById("quiz-container").style.display = "none";
-    document.getElementById("results-container").style.display = "block";
-    document.getElementById("score-text").textContent = `You scored ${score} out of ${shuffledQuestions.length}.`;
+    const scoreContainer = document.getElementById("score-container");
+    scoreContainer.style.display = "block";
+    scoreContainer.textContent = `You scored ${score} out of ${questions.length}.`;
 }
 
 startQuiz();
