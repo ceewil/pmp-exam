@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PMP Practice Quiz</title>
+    <title>PMP Exam Practice Hub</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,47 +11,41 @@
             padding: 20px;
             border: 2px solid #333;
             border-radius: 10px;
+            text-align: center;
         }
-        .question {
-            margin-bottom: 20px;
+        h1 {
+            margin-bottom: 30px;
         }
-        .answers button {
-            display: block;
-            margin: 5px 0;
-            padding: 10px;
-            width: 100%;
+        ul {
+            list-style: none;
+            padding: 0;
         }
-        .feedback {
-            margin-top: 15px;
-            font-weight: bold;
+        li {
+            margin: 15px 0;
+        }
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
-    <h1>PMP Practice Quiz</h1>
-    <div class="question">
-        <p><strong>Which document describes the necessary information to determine if a project is worth the required investment?</strong></p>
-        <div class="answers">
-            <button onclick="checkAnswer(this, 'incorrect')">A. Cost baseline</button>
-            <button onclick="checkAnswer(this, 'incorrect')">B. Service level agreement</button>
-            <button onclick="checkAnswer(this, 'incorrect')">C. Memorandum of understanding</button>
-            <button onclick="checkAnswer(this, 'correct')">D. Business case</button>
-        </div>
-        <div class="feedback" id="feedback"></div>
-    </div>
-
-    <script>
-        function checkAnswer(button, result) {
-            const feedback = document.getElementById('feedback');
-            if (result === 'correct') {
-                feedback.textContent = '✅ Correct! The Business Case determines project viability.';
-                feedback.style.color = 'green';
-            } else {
-                feedback.textContent = '❌ Incorrect. The correct answer is D. Business Case.';
-                feedback.style.color = 'red';
-            }
-        }
-    </script>
+    <h1>PMP Exam Practice Hub</h1>
+    <ul>
+        <li><a href="initiation.html">Initiation Quiz</a></li>
+        <li><a href="planning.html">Planning Quiz</a></li>
+        <li><a href="executing.html">Executing Quiz</a></li>
+        <li><a href="monitoring.html">Monitoring & Controlling Quiz</a></li>
+        <li><a href="closing.html">Closing Quiz</a></li>
+        <li><a href="mixed.html">Mixed Questions Quiz</a></li>
+        <li><a href="final-exam.html">Full Randomized Final Exam</a></li>
+    </ul>
 </body>
 </html>
-
