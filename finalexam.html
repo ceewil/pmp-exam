@@ -107,7 +107,7 @@ function nextQuestion() {
     if (currentQuestionIndex < shuffledQuestions.length) {
         showQuestion();
     } else {
-        document.getElementById("quiz-container").innerHTML = "<h2>🎉 You completed the Final Exam!</h2>";
+        window.location.href = 'thankyou.html';
     }
 }
 
