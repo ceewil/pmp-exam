@@ -1,9 +1,8 @@
-<!-- PMP Full Set Quizzes with Final Score - Mixed Questions -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PMP Mixed Questions Quiz</title>
+    <title>PMP Mixed Questions Quiz - Full Version</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,62 +32,56 @@
     </style>
 </head>
 <body>
-    <h1>PMP Mixed Questions Quiz</h1>
+    <h1>PMP Mixed Questions Quiz - Full Version</h1>
     <div id="quiz-container">
         <div class="question" id="question-box"></div>
         <div class="answers" id="answer-buttons"></div>
         <div class="feedback" id="feedback"></div>
         <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
     </div>
-
-    <div id="results-container" style="display:none;">
-        <h2>Quiz Complete!</h2>
-        <p id="score-text"></p>
-        <button onclick="startQuiz()">Retake Quiz</button>
-    </div>
-
+    <div id="score-box" style="display:none; font-weight:bold; font-size:1.2em; margin-top:20px;"></div>
 <script>
 const questions = [
     {
-        question: "Which document provides authority to apply resources to project activities?",
-        answers: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"],
+        question: "What is the purpose of the project charter?",
+        answers: ["To define project scope", "To authorize the project", "To create a detailed budget", "To assign team members"],
         correct: 1
     },
     {
-        question: "What is a key output of the Close Project or Phase process?",
-        answers: ["Work performance reports", "Final product, service, or result transition", "Resource assignments", "Project management plan"],
+        question: "Which tool is commonly used for stakeholder analysis?",
+        answers: ["Gantt Chart", "Power/Interest Grid", "PERT Chart", "Fishbone Diagram"],
         correct: 1
     },
     {
-        question: "Which Process Group focuses on tracking, reviewing, and regulating project performance?",
-        answers: ["Initiating", "Planning", "Executing", "Monitoring & Controlling"],
-        correct: 3
+        question: "During which process are project deliverables formally accepted?",
+        answers: ["Control Scope", "Validate Scope", "Close Project", "Monitor and Control Project Work"],
+        correct: 1
     },
     {
-        question: "The risk response strategy to allocate ownership of a positive risk to a third party is:",
-        answers: ["Share", "Mitigate", "Avoid", "Transfer"],
+        question: "What is a primary output of the Plan Risk Management process?",
+        answers: ["Risk Register", "Risk Breakdown Structure", "Risk Management Plan", "Assumptions Log"],
+        correct: 2
+    },
+    {
+        question: "What is the best definition of a project?",
+        answers: ["A temporary endeavor undertaken to create a unique product, service, or result", "A routine operation", "An ongoing process", "A collection of programs"],
         correct: 0
     }
-    // Full Mixed Questions set would go here...
 ];
 
-let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 
 function startQuiz() {
-    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
     score = 0;
-    document.getElementById("quiz-container").style.display = "block";
-    document.getElementById("results-container").style.display = "none";
     showQuestion();
 }
 
 function showQuestion() {
     document.getElementById("feedback").textContent = "";
     document.getElementById("next-btn").style.display = "none";
-    const q = shuffledQuestions[currentQuestionIndex];
+    const q = questions[currentQuestionIndex];
     document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
     const answerButtons = document.getElementById("answer-buttons");
     answerButtons.innerHTML = "";
@@ -101,7 +94,7 @@ function showQuestion() {
 }
 
 function checkAnswer(selected) {
-    const q = shuffledQuestions[currentQuestionIndex];
+    const q = questions[currentQuestionIndex];
     const feedback = document.getElementById("feedback");
     const buttons = document.querySelectorAll("#answer-buttons button");
     buttons.forEach(b => b.disabled = true);
@@ -118,17 +111,18 @@ function checkAnswer(selected) {
 
 function nextQuestion() {
     currentQuestionIndex++;
-    if (currentQuestionIndex < shuffledQuestions.length) {
+    if (currentQuestionIndex < questions.length) {
         showQuestion();
     } else {
-        showResults();
+        showScore();
     }
 }
 
-function showResults() {
+function showScore() {
     document.getElementById("quiz-container").style.display = "none";
-    document.getElementById("results-container").style.display = "block";
-    document.getElementById("score-text").textContent = `You scored ${score} out of ${shuffledQuestions.length}.`;
+    const scoreBox = document.getElementById("score-box");
+    scoreBox.style.display = "block";
+    scoreBox.textContent = `You scored ${score} out of ${questions.length}.`;
 }
 
 startQuiz();
