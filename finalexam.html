@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PMP Final Exam (Randomized)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .answers button {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>PMP Final Exam - Randomized</h1>
+    <div id="quiz-container">
+        <div class="question" id="question-box"></div>
+        <div class="answers" id="answer-buttons"></div>
+        <div class="feedback" id="feedback"></div>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+    <script>
+const questions = [
+    {
+        question: "In which Process Group is the project officially completed?",
+        answers: ["Initiating", "Planning", "Executing", "Closing"],
+        correct: 3
+    },
+    {
+        question: "Which document provides authority to apply resources to project activities?",
+        answers: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"],
+        correct: 1
+    },
+    {
+        question: "What is a key output of the Close Project or Phase process?",
+        answers: ["Work performance reports", "Final product, service, or result transition", "Resource assignments", "Project management plan"],
+        correct: 1
+    },
+    {
+        question: "The risk response strategy to allocate ownership of a positive risk to a third party is:",
+        answers: ["Share", "Mitigate", "Avoid", "Transfer"],
+        correct: 0
+    }
+];
+
+let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+
+function startQuiz() {
+    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("next-btn").style.display = "none";
+    const q = shuffledQuestions[currentQuestionIndex];
+    document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+    const answerButtons = document.getElementById("answer-buttons");
+    answerButtons.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answerButtons.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected) {
+    const q = shuffledQuestions[currentQuestionIndex];
+    const feedback = document.getElementById("feedback");
+    const buttons = document.querySelectorAll("#answer-buttons button");
+    buttons.forEach(b => b.disabled = true);
+    if (selected === q.correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+    } else {
+        feedback.textContent = "❌ Incorrect.";
+        feedback.style.color = "red";
+    }
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < shuffledQuestions.length) {
+        showQuestion();
+    } else {
+        document.getElementById("quiz-container").innerHTML = "<h2>🎉 You completed the Final Exam!</h2>";
+    }
+}
+
+startQuiz();
+</script>
+</body>
+</html>
