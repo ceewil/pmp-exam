@@ -1,3 +1,4 @@
+<!-- PMP Full Set Quizzes with Final Score - Monitoring & Controlling Quiz -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             border: 2px solid #333;
@@ -32,57 +33,95 @@
     </style>
 </head>
 <body>
-    <h1>PMP Quiz - Monitoring & Controlling</h1>
-    
+    <h1>PMP Monitoring & Controlling Quiz</h1>
     <div id="quiz-container">
-        <!-- Question 1 -->
-        <div class="question" id="q1">
-            <p><strong>1. Which process includes prioritizing risks for subsequent further analysis or action by assessing and combining their probability of occurrence and impact?</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q1', this, 'correct')">A. Perform Qualitative Risk Analysis</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">B. Perform Quantitative Risk Analysis</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">C. Plan Risk Management</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">D. Plan Risk Responses</button>
-            </div>
-            <div class="feedback" id="feedback-q1"></div>
-            <button class="next-btn" onclick="nextQuestion('q1', 'q2')">Next</button>
-        </div>
+        <div class="question" id="question-box"></div>
+        <div class="answers" id="answer-buttons"></div>
+        <div class="feedback" id="feedback"></div>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
 
-        <!-- Question 2 -->
-        <div class="question" id="q2" style="display:none">
-            <p><strong>2. Scope verification is primarily concerned with which of the following?</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q2', this, 'correct')">A. Acceptance of the work deliverables</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">B. Accuracy of the work deliverables</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">C. Approval of the scope statement</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">D. Accuracy of the work breakdown structure</button>
-            </div>
-            <div class="feedback" id="feedback-q2"></div>
-            <button class="next-btn" onclick="alert('End of quiz!')">Finish</button>
-        </div>
+    <div id="results-container" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="score-text"></p>
+        <button onclick="startQuiz()">Retake Quiz</button>
     </div>
 
 <script>
-function checkAnswer(qid, button, result) {
-    const feedback = document.getElementById('feedback-' + qid);
-    const buttons = document.querySelectorAll('#' + qid + ' .answers button');
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (result === 'correct') {
-        feedback.textContent = '✅ Correct!';
-        feedback.style.color = 'green';
-    } else {
-        feedback.textContent = '❌ Incorrect.';
-        feedback.style.color = 'red';
+const questions = [
+    {
+        question: "Which process involves tracking, reviewing, and regulating project progress?",
+        answers: ["Direct and Manage Project Work", "Control Scope", "Monitor and Control Project Work", "Validate Scope"],
+        correct: 2
+    },
+    {
+        question: "Which document is used to compare actual project performance against the plan?",
+        answers: ["Project charter", "Work performance reports", "Stakeholder register", "Procurement documents"],
+        correct: 1
     }
-    document.querySelector('#' + qid + ' .next-btn').style.display = 'block';
+    // Full set of Monitoring & Controlling questions would go here...
+];
+
+let shuffledQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById("quiz-container").style.display = "block";
+    document.getElementById("results-container").style.display = "none";
+    showQuestion();
 }
 
-function nextQuestion(currentId, nextId) {
-    document.getElementById(currentId).style.display = 'none';
-    document.getElementById(nextId).style.display = 'block';
+function showQuestion() {
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("next-btn").style.display = "none";
+    const q = shuffledQuestions[currentQuestionIndex];
+    document.getElementById("question-box").innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+    const answerButtons = document.getElementById("answer-buttons");
+    answerButtons.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answerButtons.appendChild(btn);
+    });
 }
+
+function checkAnswer(selected) {
+    const q = shuffledQuestions[currentQuestionIndex];
+    const feedback = document.getElementById("feedback");
+    const buttons = document.querySelectorAll("#answer-buttons button");
+    buttons.forEach(b => b.disabled = true);
+    if (selected === q.correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        score++;
+    } else {
+        feedback.textContent = "❌ Incorrect.";
+        feedback.style.color = "red";
+    }
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < shuffledQuestions.length) {
+        showQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("results-container").style.display = "block";
+    document.getElementById("score-text").textContent = `You scored ${score} out of ${shuffledQuestions.length}.`;
+}
+
+startQuiz();
 </script>
-
 </body>
 </html>
