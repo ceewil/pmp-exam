@@ -1,4 +1,3 @@
-<!-- PMP Randomized Final Exam with Full Score -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +29,11 @@
             margin-top: 20px;
             display: none;
         }
+        #score {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -39,15 +43,9 @@
         <div class="answers" id="answer-buttons"></div>
         <div class="feedback" id="feedback"></div>
         <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+        <div id="score"></div>
     </div>
-
-    <div id="results-container" style="display:none;">
-        <h2>Exam Complete!</h2>
-        <p id="score-text"></p>
-        <button onclick="startQuiz()">Retake Exam</button>
-    </div>
-
-<script>
+    <script>
 const questions = [
     {
         question: "In which Process Group is the project officially completed?",
@@ -69,7 +67,6 @@ const questions = [
         answers: ["Share", "Mitigate", "Avoid", "Transfer"],
         correct: 0
     }
-    // Full Final Exam set would go here...
 ];
 
 let shuffledQuestions = [];
@@ -80,8 +77,6 @@ function startQuiz() {
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
     score = 0;
-    document.getElementById("quiz-container").style.display = "block";
-    document.getElementById("results-container").style.display = "none";
     showQuestion();
 }
 
@@ -121,14 +116,12 @@ function nextQuestion() {
     if (currentQuestionIndex < shuffledQuestions.length) {
         showQuestion();
     } else {
-        showResults();
+        showScore();
     }
 }
 
-function showResults() {
-    document.getElementById("quiz-container").style.display = "none";
-    document.getElementById("results-container").style.display = "block";
-    document.getElementById("score-text").textContent = `You scored ${score} out of ${shuffledQuestions.length}.`;
+function showScore() {
+    document.getElementById("quiz-container").innerHTML = `<h2>Quiz Completed</h2><p>Your score: ${score} out of ${shuffledQuestions.length}</p>`;
 }
 
 startQuiz();
