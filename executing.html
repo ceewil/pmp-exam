@@ -1,3 +1,4 @@
+<!-- PMP Full Set Quizzes with Final Score - Executing Quiz -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             border: 2px solid #333;
@@ -32,57 +33,34 @@
     </style>
 </head>
 <body>
-    <h1>PMP Quiz - Executing</h1>
-    
+    <h1>PMP Executing Quiz</h1>
     <div id="quiz-container">
-        <!-- Question 1 -->
-        <div class="question" id="q1">
-            <p><strong>1. Which process is included in the Project Integration Management Knowledge Area?</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q1', this, 'incorrect')">A. Manage Project Team</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">B. Collect Requirements</button>
-                <button onclick="checkAnswer('q1', this, 'incorrect')">C. Sequence Activities</button>
-                <button onclick="checkAnswer('q1', this, 'correct')">D. Direct and Manage Project Work</button>
-            </div>
-            <div class="feedback" id="feedback-q1"></div>
-            <button class="next-btn" onclick="nextQuestion('q1', 'q2')">Next</button>
-        </div>
+        <div class="question" id="question-box"></div>
+        <div class="answers" id="answer-buttons"></div>
+        <div class="feedback" id="feedback"></div>
+        <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
 
-        <!-- Question 2 -->
-        <div class="question" id="q2" style="display:none">
-            <p><strong>2. The process of defining how the project scope will be validated and controlled is known as:</strong></p>
-            <div class="answers">
-                <button onclick="checkAnswer('q2', this, 'incorrect')">A. Define Scope</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">B. Develop Project Management Plan</button>
-                <button onclick="checkAnswer('q2', this, 'correct')">C. Plan Scope Management</button>
-                <button onclick="checkAnswer('q2', this, 'incorrect')">D. Plan Quality Management</button>
-            </div>
-            <div class="feedback" id="feedback-q2"></div>
-            <button class="next-btn" onclick="alert('End of quiz!')">Finish</button>
-        </div>
+    <div id="results-container" style="display:none;">
+        <h2>Quiz Complete!</h2>
+        <p id="score-text"></p>
+        <button onclick="startQuiz()">Retake Quiz</button>
     </div>
 
 <script>
-function checkAnswer(qid, button, result) {
-    const feedback = document.getElementById('feedback-' + qid);
-    const buttons = document.querySelectorAll('#' + qid + ' .answers button');
-    buttons.forEach(btn => btn.disabled = true);
-    
-    if (result === 'correct') {
-        feedback.textContent = '✅ Correct!';
-        feedback.style.color = 'green';
-    } else {
-        feedback.textContent = '❌ Incorrect.';
-        feedback.style.color = 'red';
+const questions = [
+    {
+        question: "Which of the following is an output of the Direct and Manage Project Work process?",
+        answers: ["Work performance data", "Project charter", "Project scope statement", "Risk register"],
+        correct: 0
+    },
+    {
+        question: "Which tool is commonly used to acquire resources during the Executing phase?",
+        answers: ["Make-or-buy analysis", "Negotiation", "Control charts", "Monte Carlo simulation"],
+        correct: 1
     }
-    document.querySelector('#' + qid + ' .next-btn').style.display = 'block';
-}
+    // Full set of Executing questions would go here...
+];
 
-function nextQuestion(currentId, nextId) {
-    document.getElementById(currentId).style.display = 'none';
-    document.getElementById(nextId).style.display = 'block';
-}
-</script>
-
-</body>
-</html>
+let shuffledQuestions = [];
+let currentQuestionI
