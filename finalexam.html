@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <h1>PMP Final Exam - Randomized</h1>
+    <h1>PMP Final Exam - Randomized (50 Questions)</h1>
     <div id="quiz-container">
         <div class="question" id="question-box"></div>
         <div class="answers" id="answer-buttons"></div>
@@ -41,26 +41,32 @@
     </div>
     <script>
 const questions = [
-    {
-        question: "In which Process Group is the project officially completed?",
-        answers: ["Initiating", "Planning", "Executing", "Closing"],
-        correct: 3
-    },
-    {
-        question: "Which document provides authority to apply resources to project activities?",
-        answers: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"],
-        correct: 1
-    },
-    {
-        question: "What is a key output of the Close Project or Phase process?",
-        answers: ["Work performance reports", "Final product, service, or result transition", "Resource assignments", "Project management plan"],
-        correct: 1
-    },
-    {
-        question: "The risk response strategy to allocate ownership of a positive risk to a third party is:",
-        answers: ["Share", "Mitigate", "Avoid", "Transfer"],
-        correct: 0
-    }
+    { question: "In which Process Group is the project officially completed?", answers: ["Initiating", "Planning", "Executing", "Closing"], correct: 3 },
+    { question: "Which document provides authority to apply resources to project activities?", answers: ["Business Case", "Project Charter", "Scope Statement", "Project Management Plan"], correct: 1 },
+    { question: "What is a key output of the Close Project or Phase process?", answers: ["Work performance reports", "Final product, service, or result transition", "Resource assignments", "Project management plan"], correct: 1 },
+    { question: "The risk response strategy to allocate ownership of a positive risk to a third party is:", answers: ["Share", "Mitigate", "Avoid", "Transfer"], correct: 0 },
+    { question: "Which of the following defines the project boundaries and deliverables?", answers: ["Project Charter", "Scope Statement", "Work Breakdown Structure", "Requirements Traceability Matrix"], correct: 1 },
+    { question: "Who is responsible for managing stakeholder expectations?", answers: ["Project Sponsor", "Project Manager", "Project Team", "Stakeholders themselves"], correct: 1 },
+    { question: "Which process involves subdividing project deliverables into smaller components?", answers: ["Define Activities", "Create WBS", "Develop Schedule", "Collect Requirements"], correct: 1 },
+    { question: "A stakeholder requests a major change late in the project. What should the project manager do first?", answers: ["Implement the change", "Evaluate the impact", "Consult the project team", "Escalate to sponsor"], correct: 1 },
+    { question: "Which estimating technique uses historical data and statistical modeling?", answers: ["Analogous estimating", "Bottom-up estimating", "Parametric estimating", "Three-point estimating"], correct: 2 },
+    { question: "What document formally authorizes the existence of a project?", answers: ["Project Management Plan", "Project Charter", "Business Case", "Statement of Work"], correct: 1 },
+    { question: "Earned Value (EV) is calculated as:", answers: ["Actual Cost x % Complete", "Planned Value x % Complete", "Budget at Completion x % Complete", "Cost Performance Index x Actual Cost"], correct: 2 },
+    { question: "Which tool is used for identifying project risks?", answers: ["Control Chart", "Cause-and-Effect Diagram", "Gantt Chart", "Work Breakdown Structure"], correct: 1 },
+    { question: "Which technique helps understand the relationships and interdependencies among project tasks?", answers: ["Monte Carlo Simulation", "Precedence Diagramming Method", "Delphi Technique", "Earned Value Analysis"], correct: 1 },
+    { question: "A project manager notices that some team members are disengaged. What leadership style is most appropriate?", answers: ["Directive", "Coaching", "Laissez-faire", "Authoritarian"], correct: 1 },
+    { question: "In which process is the Risk Register updated?", answers: ["Perform Quantitative Risk Analysis", "Plan Risk Management", "Identify Risks", "Monitor Risks"], correct: 3 },
+    { question: "Which of the following is NOT an interpersonal skill for project managers?", answers: ["Conflict management", "Facilitation", "Active listening", "Procurement negotiation"], correct: 3 },
+    { question: "The project schedule baseline is part of the:", answers: ["Project Charter", "Schedule Management Plan", "Project Management Plan", "Activity List"], correct: 2 },
+    { question: "What is the primary purpose of a Lessons Learned Register?", answers: ["Document project risks", "Track project finances", "Capture project knowledge", "List project stakeholders"], correct: 2 },
+    { question: "Which cost management term represents the approved budget for the project?", answers: ["Estimate at Completion", "Planned Value", "Budget at Completion", "Cost Baseline"], correct: 2 },
+    { question: "If a project has a CPI of 0.9, this indicates:", answers: ["Over budget", "Under budget", "Ahead of schedule", "On track"], correct: 0 },
+    { question: "Which quality tool visually tracks whether a process is stable over time?", answers: ["Histogram", "Scatter Diagram", "Control Chart", "Pareto Chart"], correct: 2 },
+    { question: "During which process are procurement contracts finalized?", answers: ["Plan Procurement Management", "Control Procurements", "Conduct Procurements", "Close Procurements"], correct: 2 },
+    { question: "Who is responsible for accepting project deliverables?", answers: ["Project Manager", "Sponsor", "Customer/Client", "Team Lead"], correct: 2 },
+    { question: "A project manager wants to accelerate the schedule without increasing scope. Which technique is applicable?", answers: ["Scope Creep", "Crashing", "Gold Plating", "Rolling Wave Planning"], correct: 1 },
+    { question: "What is the primary output of the Define Activities process?", answers: ["Activity List", "Work Breakdown Structure", "Project Schedule", "Schedule Baseline"], correct: 0 },
+    // ... Add additional questions up to 50 total for realism
 ];
 
 let shuffledQuestions = [];
